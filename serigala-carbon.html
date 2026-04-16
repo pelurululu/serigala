@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbon Division — Serigala Bayangan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --black: #080808;
+    --deep: #0f0f0f;
+    --surface: #141414;
+    --border: #1e1e1e;
+    --ash: #2a2a2a;
+    --mid: #555;
+    --silver: #999;
+    --light: #ccc;
+    --white: #f0ede8;
+    --gold: #c8a96e;
+    --gold-dim: #8a6f3f;
+    --red: #8b1a1a;
+    --amber: #d4840a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.3s, height 0.3s;
+  }
+
+  /* Carbon fiber texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.012) 2px,
+        rgba(255,255,255,0.012) 4px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.008) 2px,
+        rgba(255,255,255,0.008) 4px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 22px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .nav-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .nav-brand-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.25em;
+    color: var(--white);
+  }
+  .nav-brand-sub {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--silver);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 10px 24px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 48px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 40%, rgba(30,15,0,0.8) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 60%, rgba(10,10,10,0.9) 0%, transparent 60%),
+      linear-gradient(160deg, #0a0a0a 0%, #111008 40%, #080500 100%);
+  }
+
+  /* Carbon weave animated */
+  .hero-carbon {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(200,169,110,0.04) 0px, rgba(200,169,110,0.04) 1px, transparent 1px, transparent 8px),
+      repeating-linear-gradient(-45deg, rgba(200,169,110,0.04) 0px, rgba(200,169,110,0.04) 1px, transparent 1px, transparent 8px);
+    animation: weave 20s linear infinite;
+  }
+  @keyframes weave {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 80px 80px, -80px 80px; }
+  }
+
+  .hero-line-v {
+    position: absolute;
+    top: 0; bottom: 0;
+    right: 38%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(200,169,110,0.3) 40%, rgba(200,169,110,0.1) 70%, transparent);
+  }
+
+  .hero-tag {
+    position: absolute;
+    top: 140px;
+    right: 48px;
+    width: 36%;
+    text-align: right;
+  }
+  .hero-tag-label {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+  .hero-tag-copy {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--silver);
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.5s forwards;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.6em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold-dim);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 9vw, 130px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,169,110,0.5);
+  }
+
+  .hero-sub {
+    margin-top: 28px;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--silver);
+    line-height: 1.8;
+    max-width: 420px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .hero-actions {
+    margin-top: 44px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s forwards;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.15);
+    transition: left 0.4s;
+  }
+  .btn-primary:hover::before { left: 100%; }
+  .btn-primary:hover { background: #d4b87a; }
+
+  .btn-ghost {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--silver);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+  }
+  .btn-ghost::after {
+    content: '→';
+    font-size: 16px;
+    transition: transform 0.3s;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 80px;
+    right: 48px;
+    display: flex;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.3s forwards;
+  }
+  .stat { text-align: right; }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-unit { color: var(--gold); font-size: 22px; }
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* TICKER */
+  .ticker-wrap {
+    overflow: hidden;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+  }
+  .ticker {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-item {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--mid);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .ticker-item::after {
+    content: '✦';
+    font-size: 6px;
+    color: var(--gold-dim);
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* SECTION BASE */
+  section { position: relative; z-index: 1; }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold-dim);
+    flex-shrink: 0;
+  }
+
+  /* WHAT WE DO */
+  .intro {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .intro-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+  .intro-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .intro-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--silver);
+    margin-bottom: 28px;
+  }
+
+  .intro-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .intro-list li {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .intro-list li::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .intro-visual {
+    position: relative;
+    height: 520px;
+  }
+  .intro-card {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+  .intro-card-main {
+    inset: 0 40px 40px 0;
+    background: linear-gradient(135deg, var(--surface) 0%, #0d0d0d 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .intro-card-main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(200,169,110,0.06) 0px, rgba(200,169,110,0.06) 1px, transparent 1px, transparent 12px),
+      repeating-linear-gradient(-45deg, rgba(200,169,110,0.06) 0px, rgba(200,169,110,0.06) 1px, transparent 1px, transparent 12px);
+  }
+  .card-cf-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: rgba(200,169,110,0.08);
+    position: absolute;
+    top: 20px; right: -10px;
+  }
+  .card-main-content { position: relative; z-index: 2; }
+  .card-main-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .card-main-sub {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .intro-card-accent {
+    bottom: 0; right: 0;
+    width: 160px; height: 160px;
+    background: var(--gold);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    border: none;
+  }
+  .accent-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--black);
+    letter-spacing: 0.02em;
+  }
+  .accent-label {
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.6);
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* CATEGORIES */
+  .categories {
+    padding: 0 48px 120px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .cat-card {
+    position: relative;
+    padding: 64px 56px;
+    background: var(--deep);
+    overflow: hidden;
+    transition: background 0.4s;
+    cursor: none;
+  }
+  .cat-card:hover { background: var(--surface); }
+
+  .cat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.4s;
+  }
+  .cat-card:hover::before { background: var(--gold); }
+
+  .cat-bg-number {
+    position: absolute;
+    bottom: -20px; right: 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 200px;
+    line-height: 1;
+    color: rgba(200,169,110,0.04);
+    pointer-events: none;
+    transition: color 0.4s;
+  }
+  .cat-card:hover .cat-bg-number { color: rgba(200,169,110,0.07); }
+
+  .cat-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 32px;
+    opacity: 0.7;
+  }
+
+  .cat-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .cat-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .cat-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--silver);
+    line-height: 1.8;
+    margin-bottom: 36px;
+    max-width: 360px;
+  }
+
+  .cat-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .cat-item {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s;
+  }
+  .cat-card:hover .cat-item { border-color: var(--ash); }
+  .cat-item::after {
+    content: '→';
+    color: var(--gold-dim);
+    font-size: 14px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s;
+  }
+  .cat-card:hover .cat-item::after { opacity: 1; transform: translateX(0); }
+
+  .cat-link {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: gap 0.3s;
+  }
+  .cat-link::after { content: '→'; font-size: 16px; }
+  .cat-card:hover .cat-link { gap: 20px; }
+
+  /* PROCESS */
+  .process {
+    padding: 120px 48px;
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .process-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+  .process-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    color: var(--white);
+  }
+  .process-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--silver);
+    line-height: 1.9;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .step {
+    background: var(--surface);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .step:hover { background: var(--ash); }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: rgba(200,169,110,0.12);
+    margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  .step:hover .step-num { color: rgba(200,169,110,0.2); }
+  .step-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .step-desc {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--silver);
+    letter-spacing: 0.05em;
+  }
+  .step-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    width: 0;
+    background: var(--gold);
+    transition: width 0.6s ease;
+  }
+  .step:hover .step-bar { width: 100%; }
+
+  /* WHY AVIATION */
+  .why {
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .why-sticky { position: sticky; top: 120px; }
+  .why-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .why-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--silver);
+    line-height: 1.9;
+  }
+
+  .why-features {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .feature {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 28px;
+    align-items: start;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .feature:hover {
+    border-color: var(--gold-dim);
+    background: var(--deep);
+  }
+  .feature-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.3s;
+  }
+  .feature:hover .feature-icon { border-color: var(--gold-dim); }
+  .feature-icon svg { width: 20px; height: 20px; }
+  .feature-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .feature-desc {
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--silver);
+    letter-spacing: 0.04em;
+  }
+
+  /* SPECS BAR */
+  .specs-bar {
+    padding: 48px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+  }
+  .spec {
+    padding: 28px 32px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .spec:last-child { border-right: none; }
+  .spec-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .spec-val span { color: var(--gold); font-size: 28px; }
+  .spec-name {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+
+  /* BESPOKE */
+  .bespoke {
+    padding: 120px 48px;
+    background: linear-gradient(160deg, #0a0600 0%, #080808 60%, #0a0808 100%);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bespoke::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(200,169,110,0.025) 0px, rgba(200,169,110,0.025) 1px, transparent 1px, transparent 10px),
+      repeating-linear-gradient(-45deg, rgba(200,169,110,0.025) 0px, rgba(200,169,110,0.025) 1px, transparent 1px, transparent 10px);
+  }
+  .bespoke-content { position: relative; z-index: 2; }
+  .bespoke-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+  .bespoke-title em {
+    font-style: normal;
+    display: block;
+    color: var(--gold);
+  }
+  .bespoke-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--silver);
+    margin-bottom: 44px;
+  }
+
+  .bespoke-panel {
+    position: relative; z-index: 2;
+    background: rgba(20,14,0,0.6);
+    border: 1px solid rgba(200,169,110,0.2);
+    padding: 48px 44px;
+    backdrop-filter: blur(4px);
+  }
+  .bespoke-panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(200,169,110,0.2);
+  }
+  .bp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .bp-label { color: var(--mid); }
+  .bp-val { color: var(--light); }
+  .bp-val.gold { color: var(--gold); }
+
+  .bespoke-panel-cta {
+    display: block;
+    text-align: center;
+    margin-top: 28px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    padding: 16px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .bespoke-panel-cta:hover {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    padding: 100px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    background: var(--deep);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: 'SERIGALA';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20vw;
+    letter-spacing: 0.1em;
+    color: rgba(200,169,110,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .cta-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--silver);
+    margin-bottom: 48px;
+    position: relative;
+    max-width: 480px;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+  .cta-contact {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-top: 48px;
+    position: relative;
+  }
+  .cta-contact a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold-dim);
+    transition: border-color 0.3s;
+  }
+  .cta-contact a:hover { border-color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    color: var(--mid);
+  }
+  .footer-brand span { color: var(--gold-dim); }
+  .footer-copy {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    text-transform: uppercase;
+  }
+  .footer-how {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--mid);
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 2;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 80px; height: 1px;
+    background: linear-gradient(to right, var(--gold-dim), transparent);
+    margin: 40px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-main">Serigala Bayangan</div>
+    <div class="nav-brand-sub">Carbon Division · House of Wangsa</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#why">Technology</a></li>
+    <li><a href="#bespoke">Bespoke</a></li>
+  </ul>
+  <a href="#bespoke" class="nav-cta">Enquire Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-carbon"></div>
+  <div class="hero-line-v"></div>
+
+  <div class="hero-tag">
+    <div class="hero-tag-label">Carbon Division — Est. 2024</div>
+    <div class="hero-tag-copy">Where aerospace engineering<br>meets the road.</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Aviation-Grade Carbon Fibre</div>
+    <h1 class="hero-title">
+      Born<br>
+      in the<br>
+      <span>Sky.</span>
+    </h1>
+    <p class="hero-sub">
+      Precision-engineered carbon fibre components built to aerospace tolerances. 
+      Crafted for Harley-Davidson motorcycles and the world's finest supercars.
+    </p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Explore Components</a>
+      <a href="#process" class="btn-ghost">Our Process</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">T7<span class="stat-unit">00</span></div>
+      <div class="stat-label">Carbon Grade</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">60<span class="stat-unit">%</span></div>
+      <div class="stat-label">Weight Reduction</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3<span class="stat-unit">×</span></div>
+      <div class="stat-label">Stronger Than Steel</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">Aviation-Grade Carbon Fibre</div>
+    <div class="ticker-item">Harley-Davidson Components</div>
+    <div class="ticker-item">Supercar Aero Packages</div>
+    <div class="ticker-item">Bespoke Manufacturing</div>
+    <div class="ticker-item">Prepreg Layup Technology</div>
+    <div class="ticker-item">CNC Precision Finishing</div>
+    <div class="ticker-item">Malaysian Craftsmanship</div>
+    <div class="ticker-item">House of Wangsa</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-item">Aviation-Grade Carbon Fibre</div>
+    <div class="ticker-item">Harley-Davidson Components</div>
+    <div class="ticker-item">Supercar Aero Packages</div>
+    <div class="ticker-item">Bespoke Manufacturing</div>
+    <div class="ticker-item">Prepreg Layup Technology</div>
+    <div class="ticker-item">CNC Precision Finishing</div>
+    <div class="ticker-item">Malaysian Craftsmanship</div>
+    <div class="ticker-item">House of Wangsa</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="intro" id="about">
+  <div class="reveal">
+    <div class="section-label">Carbon Division</div>
+    <h2 class="intro-title">The Art of<br><em>Engineered</em><br>Excellence</h2>
+    <p class="intro-body">
+      Serigala Bayangan's Carbon Division was born from a singular obsession: 
+      to bring the uncompromising materials science of aviation into the world of 
+      high-performance motorcycles and exotic automobiles.
+    </p>
+    <p class="intro-body">
+      Every panel, every component, every weave is executed to tolerances 
+      that would satisfy an aerospace inspector. Because anything less 
+      is simply not Serigala.
+    </p>
+    <ul class="intro-list">
+      <li>Aerospace-grade T700 carbon fibre material</li>
+      <li>Prepreg autoclave curing process</li>
+      <li>3D-scanned fitment for every model</li>
+      <li>2×2 twill, plain, and forged carbon weave options</li>
+      <li>UV-stable clear coat or matte finish</li>
+    </ul>
+  </div>
+
+  <div class="intro-visual reveal">
+    <div class="intro-card intro-card-main">
+      <div class="card-cf-label">CF</div>
+      <div class="card-main-content">
+        <div class="card-main-title">Aviation-Grade</div>
+        <div class="card-main-sub">T700 Carbon · Autoclave Cured</div>
+      </div>
+    </div>
+    <div class="intro-card intro-card-accent">
+      <div class="accent-number">T7</div>
+      <div class="accent-label">Tensile<br>Strength Grade</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="products">
+  <div style="padding: 0 48px 48px;" class="reveal">
+    <div class="section-label">Our Products</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,4vw,52px);letter-spacing:0.03em;color:var(--white);line-height:1;">
+      Two Worlds. One Standard.
+    </h2>
+  </div>
+
+  <div class="categories">
+    <!-- HARLEY -->
+    <div class="cat-card reveal">
+      <div class="cat-bg-number">HD</div>
+      <svg class="cat-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="34" r="6" stroke="#c8a96e" stroke-width="1.2"/>
+        <circle cx="36" cy="34" r="6" stroke="#c8a96e" stroke-width="1.2"/>
+        <path d="M18 34h12M8 24h8l4-8h12l4 8h2" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M6 28l2-4M26 16l2-4" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <div class="cat-eyebrow">Motorcycle Division</div>
+      <h3 class="cat-title">Harley-Davidson<br>Carbon Series</h3>
+      <p class="cat-desc">
+        Full carbon fibre body kits and component upgrades engineered specifically 
+        for Harley-Davidson models — retaining that unmistakable silhouette while 
+        stripping away unnecessary mass.
+      </p>
+      <div class="cat-items">
+        <div class="cat-item">Tank Panels & Side Covers</div>
+        <div class="cat-item">Fender Sets — Front & Rear</div>
+        <div class="cat-item">Airbox & Intake Covers</div>
+        <div class="cat-item">Heel Guards & Foot Boards</div>
+        <div class="cat-item">Inner Fairing Panels</div>
+        <div class="cat-item">Custom Frame Accents</div>
+      </div>
+      <a href="#bespoke" class="cat-link">Configure Your Build</a>
+    </div>
+
+    <!-- SUPERCARS -->
+    <div class="cat-card reveal">
+      <div class="cat-bg-number">SC</div>
+      <svg class="cat-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 30h40M8 30l6-8h20l6 8" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14 22l4-6h12l4 6" stroke="#c8a96e" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="14" cy="33" r="4" stroke="#c8a96e" stroke-width="1.2"/>
+        <circle cx="34" cy="33" r="4" stroke="#c8a96e" stroke-width="1.2"/>
+      </svg>
+      <div class="cat-eyebrow">Supercar Division</div>
+      <h3 class="cat-title">Supercar<br>Aero Works</h3>
+      <p class="cat-desc">
+        Performance-validated aerodynamic components for exotic and high-performance 
+        automobiles. Engineered in wind-tunnel geometry, finished with surgical precision 
+        to complement the lines of the world's finest cars.
+      </p>
+      <div class="cat-items">
+        <div class="cat-item">Front Splitters & Canards</div>
+        <div class="cat-item">Rear Diffusers & Fins</div>
+        <div class="cat-item">Bonnet / Hood Vents & Panels</div>
+        <div class="cat-item">Side Skirts & Door Blades</div>
+        <div class="cat-item">Mirror Housings & A-Pillars</div>
+        <div class="cat-item">Full Interior Carbon Trim Sets</div>
+      </div>
+      <a href="#bespoke" class="cat-link">Request an Aero Package</a>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS BAR -->
+<div class="specs-bar reveal">
+  <div class="spec">
+    <div class="spec-val">T7<span>00</span></div>
+    <div class="spec-name">Carbon Grade</div>
+  </div>
+  <div class="spec">
+    <div class="spec-val">230<span>GPa</span></div>
+    <div class="spec-name">Tensile Modulus</div>
+  </div>
+  <div class="spec">
+    <div class="spec-val">0.8<span>mm</span></div>
+    <div class="spec-name">Minimum Wall Thickness</div>
+  </div>
+  <div class="spec">
+    <div class="spec-val">135<span>°C</span></div>
+    <div class="spec-name">Cure Temperature</div>
+  </div>
+  <div class="spec">
+    <div class="spec-val">±0.1<span>mm</span></div>
+    <div class="spec-name">Fitment Tolerance</div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-header reveal">
+    <div>
+      <div class="section-label">Our Method</div>
+      <h2 class="process-title">From<br>Blueprint<br>to Road</h2>
+    </div>
+    <p class="process-intro">
+      Every Serigala carbon component begins not with fabric and resin, 
+      but with obsessive measurement. We 3D-scan the host vehicle, 
+      compute the geometry, prototype the tooling, and only then do we 
+      cut the first sheet of carbon. The result: components that fit 
+      the first time, every time.
+    </p>
+  </div>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3 class="step-title">3D Scan & Survey</h3>
+      <p class="step-desc">Full-vehicle or targeted surface scanning to capture precise geometry. We model to ±0.05mm accuracy before a single tool is made.</p>
+      <div class="step-bar"></div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Mould Engineering</h3>
+      <p class="step-desc">CNC-milled aluminium or composite tooling. Mould geometry validated against the 3D scan model at every stage.</p>
+      <div class="step-bar"></div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Prepreg Layup</h3>
+      <p class="step-desc">T700 prepreg carbon fabric applied by hand in controlled layers. Orientation and stacking sequence engineered for optimal stiffness-to-weight.</p>
+      <div class="step-bar"></div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Autoclave Cure</h3>
+      <p class="step-desc">Parts cured under precisely controlled temperature and pressure — the same process used in commercial aviation primary structure manufacture.</p>
+      <div class="step-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY AVIATION -->
+<section class="why" id="why">
+  <div class="why-sticky reveal">
+    <div class="section-label">Why It Matters</div>
+    <h2 class="why-title">Aviation-Grade<br>Is Not<br>Marketing.</h2>
+    <div class="divider"></div>
+    <p class="why-sub">
+      In aerospace, a component failure means lives. That culture of 
+      zero-tolerance precision is embedded in every process we run 
+      at Serigala Carbon Division. For your motorcycle or supercar, 
+      it means parts that perform flawlessly — for decades.
+    </p>
+  </div>
+
+  <div class="why-features">
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="feature-title">Prepreg Autoclave Technology</div>
+        <p class="feature-desc">Unlike wet-layup or vacuum-infused parts, prepreg autoclave components achieve the highest possible fibre-to-resin ratio, eliminating voids and delivering maximum structural integrity. This is how aircraft skins are made.</p>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.2">
+          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="feature-title">Dimensional Stability</div>
+        <p class="feature-desc">Our parts are engineered to maintain dimensional accuracy across extreme thermal cycles — from a cold Malaysian morning to the heat soak of a supercar engine bay on a track day. No warping. No creep.</p>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.2">
+          <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="feature-title">Zero-Compromise Finish</div>
+        <p class="feature-desc">Every external surface is finished by hand — sanded through progressive grits, inspected under directional lighting, and sealed with UV-stable clear coat. The weave pattern is a feature, not a by-product.</p>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.2">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </div>
+      <div>
+        <div class="feature-title">Fit-First, Always</div>
+        <p class="feature-desc">Carbon parts that don't fit properly are worse than useless — they vibrate, crack at stress risers, and look wrong. Our 3D-scan tooling process means every piece drops into place without modification.</p>
+      </div>
+    </div>
+
+    <div class="feature reveal">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.2">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="feature-title">Weight That Changes Everything</div>
+        <p class="feature-desc">Switching to Serigala carbon typically removes 40–60% of component weight versus OEM polymer parts — without sacrificing rigidity. Less unsprung and rotational mass translates directly into sharper dynamics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BESPOKE -->
+<section class="bespoke" id="bespoke">
+  <div class="bespoke-content reveal">
+    <div class="section-label">Bespoke Commission</div>
+    <h2 class="bespoke-title">
+      Nothing<br>
+      <em>Off the Shelf.</em>
+    </h2>
+    <p class="bespoke-body">
+      Every commission begins with a conversation. You tell us the machine, 
+      the aesthetic direction, the function you need served. We handle 
+      the engineering, the tooling, the curing, the finishing. 
+      What arrives at your door is something made for one machine 
+      and one owner only.
+    </p>
+    <a href="mailto:carbon@serigala.my" class="btn-primary">Begin Your Commission</a>
+  </div>
+
+  <div class="bespoke-panel reveal">
+    <div class="bespoke-panel-title">Commission Overview</div>
+    <div class="bp-row">
+      <span class="bp-label">Lead Time</span>
+      <span class="bp-val">4 – 8 Weeks</span>
+    </div>
+    <div class="bp-row">
+      <span class="bp-label">Minimum Order</span>
+      <span class="bp-val">Single Piece</span>
+    </div>
+    <div class="bp-row">
+      <span class="bp-label">Material Standard</span>
+      <span class="bp-val gold">T700 Aviation-Grade</span>
+    </div>
+    <div class="bp-row">
+      <span class="bp-label">Weave Options</span>
+      <span class="bp-val">2×2 Twill / Plain / Forged</span>
+    </div>
+    <div class="bp-row">
+      <span class="bp-label">Finish Options</span>
+      <span class="bp-val">Gloss / Satin / Matte</span>
+    </div>
+    <div class="bp-row">
+      <span class="bp-label">Coverage</span>
+      <span class="bp-val">Malaysia · Singapore · GCC</span>
+    </div>
+    <div class="bp-row" style="border-bottom:none;">
+      <span class="bp-label">Consultation</span>
+      <span class="bp-val gold">Complimentary</span>
+    </div>
+    <a href="mailto:carbon@serigala.my" class="bespoke-panel-cta">Request Consultation</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="cta-eyebrow">Serigala Bayangan — Carbon Division</div>
+  <h2 class="cta-title">Your Machine.<br>Reborn.</h2>
+  <p class="cta-sub">Aviation precision. Malaysian craftsmanship. Delivered to your door.</p>
+  <div class="cta-actions">
+    <a href="mailto:carbon@serigala.my" class="btn-primary">Start Your Build</a>
+  </div>
+  <p class="cta-contact">
+    Enquiries: <a href="mailto:carbon@serigala.my">carbon@serigala.my</a>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    WhatsApp: <a href="https://wa.me/60">+60 Contact Us</a>
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Serigala Bayangan <span>✦ Carbon Division</span></div>
+  <div class="footer-copy">© 2024 ASAS Technologies (M) Sdn Bhd · 1670390-W</div>
+  <div class="footer-how">
+    A House of Wangsa Brand<br>
+    <span style="color:var(--gold-dim);">serigala.my</span>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '16px';
+      cursor.style.height = '16px';
+      ring.style.width = '48px';
+      ring.style.height = '48px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px';
+      cursor.style.height = '8px';
+      ring.style.width = '32px';
+      ring.style.height = '32px';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
