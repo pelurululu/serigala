@@ -1,18 +1,18 @@
 
 :root {
     --black: #080808;
-    --deep: #0e0e0e;
-    --surface: #161616;
-    --border: #242424;
-    --ash: #333333;
-    --mid: #666666;
-    --silver: #a0a0a0;
-    --light: #d0d0d0;
-    --white: #f4f4f2;
-    --gold: #e0e0e0;       /* was warm gold → now cool light grey */
-    --gold-dim: #707070;   /* was dim gold → now medium grey */
-    --red: #c0392b;        /* kept red but slightly brighter/cleaner */
-    --amber: #e67e22;      /* kept amber, desaturated slightly to feel less warm */
+    --deep: #111111;
+    --surface: #f7f7f7;
+    --border: #e0e0e0;
+    --ash: #cccccc;
+    --mid: #888888;
+    --silver: #555555;
+    --light: #333333;
+    --white: #ffffff;
+    --gold: #222222;
+    --gold-dim: #999999;
+    --red: #b91c1c;
+    --amber: #c47a0a;
 }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
