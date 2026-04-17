@@ -1,18 +1,18 @@
 
 :root {
     --black: #080808;
-    --deep: #111111;
-    --surface: #f7f7f7;
-    --border: #e0e0e0;
-    --ash: #cccccc;
+    --deep: #0f0f0f;
+    --surface: #f9f9f9;
+    --border: #e8e8e8;
+    --ash: #d4d4d4;
     --mid: #888888;
-    --silver: #555555;
-    --light: #333333;
+    --silver: #4a4a4a;
+    --light: #1a1a1a;
     --white: #ffffff;
-    --gold: #222222;
-    --gold-dim: #999999;
+    --gold: #1a1a1a;
+    --gold-dim: #aaaaaa;
     --red: #b91c1c;
-    --amber: #c47a0a;
+    --amber: #b86a00;
 }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,7 +42,7 @@
   .cursor-ring {
     position: fixed;
     width: 32px; height: 32px;
-    border: 1px solid rgba(200,169,110,0.4);
+    border: 1px solid rgba(26,26,26,0.25);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
@@ -157,9 +157,9 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 60% 80% at 70% 40%, rgba(30,15,0,0.8) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 20% 60%, rgba(10,10,10,0.9) 0%, transparent 60%),
-      linear-gradient(160deg, #0a0a0a 0%, #111008 40%, #080500 100%);
+        radial-gradient(ellipse 60% 80% at 70% 40%, rgba(0,0,0,0.6) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 60%, rgba(0,0,0,0.8) 0%, transparent 60%),
+        linear-gradient(160deg, #0a0a0a 0%, #111111 40%, #080808 100%);
   }
 
   /* Carbon weave animated */
@@ -167,8 +167,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      repeating-linear-gradient(45deg, rgba(200,169,110,0.04) 0px, rgba(200,169,110,0.04) 1px, transparent 1px, transparent 8px),
-      repeating-linear-gradient(-45deg, rgba(200,169,110,0.04) 0px, rgba(200,169,110,0.04) 1px, transparent 1px, transparent 8px);
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 8px),
+        repeating-linear-gradient(-45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 8px);
     animation: weave 20s linear infinite;
   }
   @keyframes weave {
@@ -181,7 +181,7 @@
     top: 0; bottom: 0;
     right: 38%;
     width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(200,169,110,0.3) 40%, rgba(200,169,110,0.1) 70%, transparent);
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.08) 70%, transparent);
   }
 
   .hero-tag {
@@ -243,7 +243,7 @@
   .hero-title span {
     display: block;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(200,169,110,0.5);
+     -webkit-text-stroke: 1px rgba(0,0,0,0.35);
   }
 
   .hero-sub {
@@ -462,7 +462,10 @@
   }
   .intro-card-main {
     inset: 0 40px 40px 0;
-    background: linear-gradient(135deg, var(--surface) 0%, #0d0d0d 100%);
+    background-image:
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 12px),
+        repeating-linear-gradient(-45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 12px);
+
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -481,7 +484,7 @@
     font-size: 100px;
     letter-spacing: -0.02em;
     line-height: 1;
-    color: rgba(200,169,110,0.08);
+     color: rgba(0,0,0,0.06);
     position: absolute;
     top: 20px; right: -10px;
   }
@@ -561,7 +564,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 200px;
     line-height: 1;
-    color: rgba(200,169,110,0.04);
+     color: rgba(0,0,0,0.04);
     pointer-events: none;
     transition: color 0.4s;
   }
@@ -689,11 +692,11 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 72px;
     line-height: 1;
-    color: rgba(200,169,110,0.12);
+   color: rgba(0,0,0,0.08);
     margin-bottom: 20px;
     transition: color 0.3s;
   }
-  .step:hover .step-num { color: rgba(200,169,110,0.2); }
+  .step:hover .step-num {  color: rgba(0,0,0,0.15); }
   .step-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 22px;
@@ -821,7 +824,7 @@
   /* BESPOKE */
   .bespoke {
     padding: 120px 48px;
-    background: linear-gradient(160deg, #0a0600 0%, #080808 60%, #0a0808 100%);
+     background: linear-gradient(160deg, #0c0c0c 0%, #080808 60%, #0a0a0a 100%);
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 80px;
@@ -834,8 +837,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      repeating-linear-gradient(45deg, rgba(200,169,110,0.025) 0px, rgba(200,169,110,0.025) 1px, transparent 1px, transparent 10px),
-      repeating-linear-gradient(-45deg, rgba(200,169,110,0.025) 0px, rgba(200,169,110,0.025) 1px, transparent 1px, transparent 10px);
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 10px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 10px);
   }
   .bespoke-content { position: relative; z-index: 2; }
   .bespoke-title {
@@ -862,8 +865,8 @@
 
   .bespoke-panel {
     position: relative; z-index: 2;
-    background: rgba(20,14,0,0.6);
-    border: 1px solid rgba(200,169,110,0.2);
+    background: rgba(12,12,12,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
     padding: 48px 44px;
     backdrop-filter: blur(4px);
   }
@@ -874,14 +877,14 @@
     color: var(--white);
     margin-bottom: 32px;
     padding-bottom: 16px;
-    border-bottom: 1px solid rgba(200,169,110,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   .bp-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 14px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     font-size: 11px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -931,7 +934,7 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 20vw;
     letter-spacing: 0.1em;
-    color: rgba(200,169,110,0.025);
+     color: rgba(0,0,0,0.04);
     white-space: nowrap;
     pointer-events: none;
   }
