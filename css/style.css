@@ -1,17 +1,17 @@
 :root {
   --black:    #080808;
   --deep:     #111111;
-  --surface:  #f6f6f6;
-  --border:   #e4e4e4;
-  --ash:      #cacaca;
-  --mid:      #898989;
-  --silver:   #4a4a4a;
-  --light:    #1c1c1c;
+  --surface:  #1a1a1a;
+  --border:   #2a2a2a;
+  --ash:      #444444;
+  --mid:      #888888;
+  --silver:   #b0b0b0;
+  --light:    #d8d8d8;
   --white:    #ffffff;
-  --gold:     #0d0d0d;       /* accent = near-black */
-  --gold-dim: #aaaaaa;       /* dim accent = cool grey */
-  --red:      #b91c1c;
-  --amber:    #b86800;
+  --gold:     #c8a96e;       /* accent = warm gold */
+  --gold-dim: #8a7050;       /* dim accent = muted gold */
+  --red:      #e53535;
+  --amber:    #f59e0b;
 }
 
 /* ─── RESET ─── */
